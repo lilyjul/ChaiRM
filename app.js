@@ -11,10 +11,20 @@ const redisClient = redis.createClient();
 const app = express();
 const PORT = 3000;
 
+//реквайры роутеров
+const indexRouter = require('./src/routes/indexRouter')
+const signRouter = require('./src/routes/signRouter')
+const clientRouter = require('./src/routes/clientsRouter')
+
 app.set('view engine', 'hbs');
 app.set('views', path.join(process.env.PWD, 'src', 'views'));
 
 hbs.registerPartials(path.join(process.env.PWD, 'src', 'views', 'partials'));
+
+app.use(logger('dev'))
+app.use(express.static(path.join(process.env.PWD, 'public')))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 const sessionConfig = {
     store: new RedisStore({ host: "localhost", port: 6379, client: redisClient }),
@@ -26,6 +36,25 @@ const sessionConfig = {
     cookie: { expires: 24 * 60 * 60e3 },
 }
 app.use(session(sessionConfig));
+
+
+app.use((req, res, next) => {
+    res.locals.userStatus = req.session.userStatus;
+    res.locals.userId = req.session.userId;
+    next();
+});
+
+//мидлвары на роуты
+app.use('/', indexRouter)
+app.use('/log', signRouter)
+app.use('/clients', clientRouter)
+
+
+
+
+
+
+
 
 
 
