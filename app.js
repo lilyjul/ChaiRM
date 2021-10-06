@@ -16,6 +16,12 @@ app.set('views', path.join(process.env.PWD, 'src', 'views'));
 
 hbs.registerPartials(path.join(process.env.PWD, 'src', 'views', 'partials'));
 
+app.use(logger('dev'));
+app.use(express.static(path.join.process.env.PWD, 'public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+
 const sessionConfig = {
     store: new RedisStore({ host: "localhost", port: 6379, client: redisClient }),
     key: 'sid',
