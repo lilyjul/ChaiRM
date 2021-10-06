@@ -1,0 +1,30 @@
+*{
+  box-sizing: border-box;
+}
+.box{
+  width: 1440px;
+  margin: 0 auto;
+}
+.container{
+  background-size: cover;
+  object-fit: cover;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  background-image:url('/images/6.jpg');
+}
+.navbar-nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+}
+.nav-lin{
+  font-size: 25px;
+  text-decoration: none;
+  color:azure;
+}
+.nav-lin:hover{
+  color: red
+}

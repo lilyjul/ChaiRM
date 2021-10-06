@@ -7,6 +7,7 @@ const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const redisClient = redis.createClient();
+const indexRouter = require('./src/routes/index.roure')
 
 const app = express();
 const PORT = 3000;
@@ -16,6 +17,7 @@ app.set('views', path.join(process.env.PWD, 'src', 'views'));
 
 hbs.registerPartials(path.join(process.env.PWD, 'src', 'views', 'partials'));
 
+app.use(express.static(path.join(process.env.PWD, 'public')));
 const sessionConfig = {
     store: new RedisStore({ host: "localhost", port: 6379, client: redisClient }),
     key: 'sid',
@@ -27,7 +29,7 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig));
 
-
+app.use('/', indexRouter)
 
 
 // Если HTTP-запрос дошёл до этой строчки, значит ни один из ранее встречаемых рутов не ответил на запрос. Это значит, что искомого раздела просто нет на сайте. Для таких ситуаций используется код ошибки 404. Создаём небольшое middleware, которое генерирует соответствующую ошибку.
