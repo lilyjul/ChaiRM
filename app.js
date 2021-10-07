@@ -7,7 +7,6 @@ const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const redisClient = redis.createClient();
-const indexRouter = require('./src/routes/index.roure')
 
 const app = express();
 const PORT = 3000;
@@ -37,7 +36,6 @@ const sessionConfig = {
     cookie: { expires: 24 * 60 * 60e3 },
 }
 app.use(session(sessionConfig));
-
 
 app.use((req, res, next) => {
     res.locals.admin = {admin:true}
