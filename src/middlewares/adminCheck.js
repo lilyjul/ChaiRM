@@ -3,3 +3,4 @@ const adminCheck = (req, res, next) => {
         res.locals.admin = { admin: false }
     }
 }
+ module.exports = adminCheck

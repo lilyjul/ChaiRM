@@ -1,11 +1,18 @@
-<form action="/login" method="POST">
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input name="email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input name="password" type="text" class="form-control" id="exampleInputPassword1">
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<main class="main">
+
+  <h1>{{error}}</h1>
+
+
+
+  <form class="regform" action="/log/signin" method="POST">
+    <div class="login">
+      <label for="exampleInputEmail1" class="form-label-email">Enter your login</label> <br>
+      <input name="email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    </div>
+    <div class="password">
+      <label for="exampleInputPassword1" class="form-label-password">Enter your password</label> <br>
+      <input name="password" type="text" class="form-control" id="exampleInputPassword1">
+    </div>
+    <button type="submit" class="btn">Submit</button>
+  </form>
+</main>

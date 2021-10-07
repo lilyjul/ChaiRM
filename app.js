@@ -13,10 +13,11 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.DB_PORT || 3000;
 
-//реквайры роутеров
+// реквайры роутеров
 const indexRouter = require('./src/routes/indexRouter')
 const signRouter = require('./src/routes/signRouter')
 const clientRouter = require('./src/routes/clientsRouter')
+const ordersRouter = require('./src/routes/ordersRouter')
 
 app.set('view engine', 'hbs');
 app.set('views', path.join(process.env.PWD, 'src', 'views'));
@@ -40,16 +41,15 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 
 app.use((req, res, next) => {
-    res.locals.admin = {admin:true}
-    res.locals.userStatus = req.session.userStatus;
-    res.locals.userId = req.session.userId;
-    next();
+    res.locals.user = req.session.user;
+    next()
 });
 
-//мидлвары на ручки
+// мидлвары на ручки
 app.use('/', indexRouter)
 app.use('/log', signRouter)
 app.use('/clients', clientRouter)
+app.use('/orders', ordersRouter)
 
 
 
@@ -66,8 +66,8 @@ app.use(session(sessionConfig));
 // Для таких ситуаций используется код ошибки 404. Создаём небольшое middleware, которое генерирует соответствующую ошибку.
 
 app.use((req, res, next) => {
-  const error = createError(404, 'Запрашиваемой страницы не существует на сервере.');
-  next(error);
+    const error = createError(404, 'Запрашиваемой страницы не существует на сервере.');
+    next(error);
 });
 
 // Отлавливаем HTTP-запрос с ошибкой и отправляем на него ответ.
@@ -95,5 +95,5 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(PORT, () => {
-  console.log(`server started PORT: ${PORT}`);
+    console.log(`server started PORT: ${PORT}`);
 });

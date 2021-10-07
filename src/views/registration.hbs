@@ -1,15 +1,28 @@
-<form action="/registration" method="POST">
-  <div class="mb-3">
-    <label for="exampleInputEmail2" class="form-label">Enter your name</label>
-    <input name="name" type="text" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Enter your email address</label>
-    <input name="email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Enter your password</label>
-    <input name="password" type="text" class="form-control" id="exampleInputPassword1">
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+  <main class="main">
+    <form class="regform" action="/log/signup" method="POST">
+      <div class="name">
+        <label for="exampleInputEmail2" class="registration_style">Введите имя</label> <br>
+        <input name="firstName" type="text" placeholder="Имя" class="form-control" id="exampleInputEmail2"
+          aria-describedby="emailHelp">
+      </div>
+      <div class="lastname">
+        <label for="exampleInputEmail2" class="registration_style">Введите фамилию</label> <br>
+        <input name="lastName" type="text" placeholder="Фамилия" class="form-control" id="exampleInputEmail2"
+          aria-describedby="emailHelp">
+      </div>
+      <div class="position">
+        <label for="exampleInputEmail1" class="registration_style">Введите должность</label> <br>
+        <input name="email" type="text" placeholder="Должность" class="form-control" id="exampleInputEmail1"
+          aria-describedby="emailHelp">
+      </div>
+      <div class="login">
+        <label for="exampleInputPassword1" class="registration_style">Введите логин</label> <br>
+        <input name="password" type="text" placeholder="Логин" class="form-control" id="exampleInputPassword1">
+      </div>
+      <div class="password">
+        <label for="exampleInputPassword1" class="registration_style">Введите пароль</label> <br>
+        <input name="position" type="text" placeholder="Пароль" class="form-control" id="exampleInputPassword1">
+      </div>
+      <button type="submit" class="btn">Отправить</button>
+    </form>
+  </main>

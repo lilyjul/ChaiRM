@@ -1,26 +1,45 @@
+const bcrypt = require('bcryptjs')
+const { User } = require('../db/models')
+
 function signinRender(req, res, next) {
-    res.render('sign', { sign: false })
+    res.render('login', { sign: false })
 }
 
 function signupRender(req, res, next) {
-    res.render('sign', { sign: true })
+    res.render('registration', { sign: true })
 }
 
-async function regNewUser (req, res, next) {
-    const { login, password: pass, email, status } = req.body
-    if (login && pass && email && status) {
-        try {
-            const saltRounds = 10;
-            const password = await bcrypt.hash(pass, saltRounds)
-            const curUser = await User.create({ login, password, email, status })
-            req.session.user = { id: curUser.id, login: curUser.login, status: curUser.status }
-        } catch (error) {
-            res.render('sign', { sign: false, error: 'Вы уже зарегистрированны в системе используйте Ваши логин и пароль' })
-        }
+async function regNewUser(req, res, next) {
+    const { firstName, lastName, email, password: pass, position } = req.body
+    if (firstName && lastName && email && pass, position) {
+        const saltRounds = 10;
+        const password = await bcrypt.hash(pass, saltRounds)
+        const curUser = await User.create({ firstName, lastName, email, password, position })
+        req.session.user = { id: curUser.id, name: curUser.firstName, position: curUser.position }
+        res.redirect('/')
     } else {
-        res.render('sign', { sign: true, error: 'Вы заполнили не все поля' })
+        res.render('registration', { error: 'Вы заполнили не все поля' })
+    }
+    
+}
+
+
+async function signInUser(req, res, next){
+    const { email, password } = req.body
+    if (email && password) {
+        const curUser = await User.findOne({ where: { email } })
+        if (curUser === null) {
+            res.render('login', {error: "Пользователь не найден" })
+        } else {
+            if (await bcrypt.compare(password, curUser.password)) {
+                req.session.user = { id: curUser.id, name: curUser.firstName, status: curUser.status }
+                res.redirect('/')
+            } else {
+                res.render('login', { sign: true, error: 'Пароль неверный' })
+            }
+        }
     }
 }
 
 
-module.exports = { signinRender, signupRender }
+module.exports = { signinRender, signupRender, regNewUser, signInUser}

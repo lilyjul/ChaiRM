@@ -1,19 +1,18 @@
-<h1>Add client</h1>
+<main class="main">
+  <h1>Our Clients</h1>
+  <div>
 
-<form method="post" action="/clients">
-  <label for="title-input" class="block mar-b-1">ФИО:</label>
-  <input id="title-input" name="title" type="text" value="{{entry.title}}" tabindex="1"
-    class="block w-100 no-outline no-border pad-1 mar-b-2">
+    <div>
+      {{#each customersList}}
+      <p class="fio">{{this.firstName}} {{this.lastName}}</p>
+      <p class="fio"> Address: {{this.address}}</p>
+      <textarea id="comment-textarea" name="body" cols="200" rows="400" class="client_comment"></textarea>
+      <button id="add_comment" data-entryid="{{entry.id}}" value="add" class="add_com">Add comment</button>
+      {{/each}}
+    </div>
+    <div>
+      {{curCustomer}}
+    </div>
 
-  <label for="title-input" class="block mar-b-1">Address:</label>
-  <input id="title-input" name="title" type="text" value="{{entry.title}}" tabindex="1"
-    class="block w-100 no-outline no-border pad-1 mar-b-2">
-
-
-  <label for="body-textarea" class="block mar-b-1">Add comment:</label>
-  <textarea id="body-textarea" name="body" tabindex="2"
-    class="block w-100 h-10 no-resize no-outline no-border no-resize pad-1 mar-b-2">{{entry.body}}</textarea>
-
-  <input type="submit" value="Publish" tabindex="3"
-    class="block button w-100 mar-t-4 mar-b-3 pad-2 round-1 text-c center no-border no-outline">
-</form>
+  </div>
+</main>
