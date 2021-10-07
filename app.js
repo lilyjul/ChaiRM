@@ -39,12 +39,13 @@ app.use(session(sessionConfig));
 
 
 app.use((req, res, next) => {
+    res.locals.admin = {admin:true}
     res.locals.userStatus = req.session.userStatus;
     res.locals.userId = req.session.userId;
     next();
 });
 
-//мидлвары на роуты
+//мидлвары на ручки
 app.use('/', indexRouter)
 app.use('/log', signRouter)
 app.use('/clients', clientRouter)
