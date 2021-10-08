@@ -6,31 +6,66 @@ const hbs = require('hbs');
 const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
+
 const redisClient = redis.createClient();
+require('dotenv').config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.DB_PORT || 3000;
+
+// реквайры роутеров
+const indexRouter = require('./src/routes/indexRouter')
+const signRouter = require('./src/routes/signRouter')
+const clientRouter = require('./src/routes/clientsRouter')
+const ordersRouter = require('./src/routes/ordersRouter')
 
 app.set('view engine', 'hbs');
 app.set('views', path.join(process.env.PWD, 'src', 'views'));
 
 hbs.registerPartials(path.join(process.env.PWD, 'src', 'views', 'partials'));
 
+app.use(logger('dev'));
+app.use(express.static(path.join(process.env.PWD, 'public')));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 const sessionConfig = {
-    store: new RedisStore({ host: "localhost", port: 6379, client: redisClient }),
+    store: new RedisStore({ host: process.env.DB_HOST, port: 6379, client: redisClient }),
     key: 'sid',
     secret: 'secret',
     resave: false,
     saveUninitialized: false,
     httpOnly: true,
     cookie: { expires: 24 * 60 * 60e3 },
-}
+};
+
 app.use(session(sessionConfig));
 
+app.use((req, res, next) => {
+    res.locals.user = req.session.user;
+    next()
+});
+
+// мидлвары на ручки
+app.use('/', indexRouter)
+app.use('/log', signRouter)
+app.use('/clients', clientRouter)
+app.use('/orders', ordersRouter)
 
 
 
-// Если HTTP-запрос дошёл до этой строчки, значит ни один из ранее встречаемых рутов не ответил на запрос. Это значит, что искомого раздела просто нет на сайте. Для таких ситуаций используется код ошибки 404. Создаём небольшое middleware, которое генерирует соответствующую ошибку.
+
+
+
+
+
+
+app.use(session(sessionConfig));
+
+// Если HTTP-запрос дошёл до этой строчки, значит ни один из ранее встречаемых рутов не ответил на запрос. 
+// Это значит, что искомого раздела просто нет на сайте. 
+// Для таких ситуаций используется код ошибки 404. Создаём небольшое middleware, которое генерирует соответствующую ошибку.
+
 app.use((req, res, next) => {
     const error = createError(404, 'Запрашиваемой страницы не существует на сервере.');
     next(error);
@@ -62,4 +97,4 @@ app.use(function (err, req, res, next) {
 
 app.listen(PORT, () => {
     console.log(`server started PORT: ${PORT}`);
-})
+});
