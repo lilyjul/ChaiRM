@@ -1,0 +1,33 @@
+<p class="h2">Details</p>
+
+<div class="card bg-warning" style="width: 50rem; border: 3px solid black; margin: 10px">
+       {{#if orderData}}
+  <div class="card-body">
+    <h3 class="card-title">Order №{{orderData.orderNumber}}</h5>
+    <ul>
+      <li>
+        <label><b>Furniture Type:</b><p>{{orderData.furnType}}</p></label>
+      </li>
+      <li>
+        <label><b>Furniture Price:</b><p>{{orderData.furnPrice}}</p></label>
+      </li>
+      <li>
+        <label><b>Shipping Price:</b><p>{{orderData.shippingPrice}}</p></label>
+      </li>
+      <li>
+        <label><b>Installation Price:</b><p>{{orderData.installPrice}}</p></label>
+      </li>
+      <li>
+        <label><b>Shipping Crew:</b><p>{{orderData.shippingCrew}}</p></label>
+      </li>
+      <li>
+        <label><b>Installation Crew:</b><p>{{orderData.installCrew}}</p></label>
+      </li>
+      <li>
+        <label><b>Order Status:</b><p>{{orderData.orderStatus}}</p></label>
+      </li>
+    </ul>
+    <a href="/{{orderData.customerId}}" class="card-link">Client card</a>
+  </div>
+      {{/if}}
+</div>

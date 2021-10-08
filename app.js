@@ -14,50 +14,45 @@ const app = express();
 const PORT = process.env.DB_PORT || 3000;
 
 //реквайры роутеров
-const indexRouter = require('./src/routes/indexRouter')
-const signRouter = require('./src/routes/signRouter')
-const clientRouter = require('./src/routes/clientsRouter')
+const indexRouter = require('./src/routes/indexRouter');
+const signRouter = require('./src/routes/signRouter');
+const clientRouter = require('./src/routes/clientsRouter');
+const orderRouter = require('./src/routes/ordersRouter');
 
 app.set('view engine', 'hbs');
 app.set('views', path.join(process.env.PWD, 'src', 'views'));
 
 hbs.registerPartials(path.join(process.env.PWD, 'src', 'views', 'partials'));
 
-app.use(logger('dev'))
-app.use(express.static(path.join(process.env.PWD, 'public')))
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+app.use(logger('dev'));
+app.use(express.static(path.join(process.env.PWD, 'public')));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const sessionConfig = {
-    store: new RedisStore({ host: "localhost", port: 6379, client: redisClient }),
-    key: 'sid',
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: false,
-    httpOnly: true,
-    cookie: { expires: 24 * 60 * 60e3 },
-}
+  store: new RedisStore({ host: process.env.DB_HOST, port: 6379, client: redisClient }),
+  key: 'sid',
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false,
+  httpOnly: true,
+  cookie: { expires: 24 * 60 * 60e3 },
+};
+
 app.use(session(sessionConfig));
 
 app.use((req, res, next) => {
-    res.locals.admin = {admin:true}
-    res.locals.userStatus = req.session.userStatus;
-    res.locals.userId = req.session.userId;
-    next();
+  res.locals.admin = { admin: true };
+  res.locals.userStatus = req.session.userStatus;
+  res.locals.userId = req.session.userId;
+  next();
 });
 
 //мидлвары на ручки
-app.use('/', indexRouter)
-app.use('/log', signRouter)
-app.use('/clients', clientRouter)
-
-
-
-
-
-
-
-
+app.use('/', indexRouter);
+app.use('/log', signRouter);
+app.use('/clients', clientRouter);
+app.use('/orders', orderRouter);
 
 app.use(session(sessionConfig));
 

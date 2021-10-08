@@ -1,1 +1,26 @@
-<h3>Orders</h3>
+<h3 class="h3">Orders</h3>
+<form name="orderList">
+<ul>
+  {{#each orderData}}
+  <li>
+    <a href="/orders/{{this.id}}">Order №{{this.orderNumber}}</a>
+    <ul>
+      <li>
+        {{!-- <form name="card"> --}}
+        {{#each this.Comments}}
+          <div class="card">
+            <div data-id="{{this.id}}" class="card-body">
+              <h5 class="card-title">{{this.title}}</h5>
+              <p class="card-text">{{this.content}}</p>
+              <button type="button" class="btn btn-success" style="margin: 10px 5px 5px 5px;">Edit</button>
+              <button type="button" class="btn btn-danger" style="margin: 10px 5px 5px 5px;">Delete</button>
+            </div>
+          </div>
+        {{/each}}
+        {{!-- </form> --}}
+      </li>
+    </ul>
+  </li>
+  {{/each}}
+</ul>
+</form>

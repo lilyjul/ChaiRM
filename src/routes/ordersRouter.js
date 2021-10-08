@@ -1,21 +1,58 @@
-const router = require('express').Router();
+const orderRouter = require('express').Router();
+const { Order, Comment } = require('../db/models');
 
-router.get('/', (req, res) => {
-  res.render('order');
-});
+orderRouter.route('/')
+  .get(async (req, res) => {
+    const orderData = await Order.findAll({
+      include: [{
+        model: Comment,
+      }],
+      order: [
+        ['id', 'ASC'],
+      ],
+    });
+    res.render('order', { orderData });
+  });
 
-router.post('/', (req, res) => {
-  res.render('registration');
-})
+orderRouter.route('/:id')
+  .get(async (req, res) => {
+    const orderData = await Order.findOne({
+      where: {
+        id: req.params.id,
+      },
+      raw: true,
+    });
+    res.render('orderdetails', { orderData });
+  });
 
-router.post('/registration', async (req, res) => {
-  const { email, password, name } = req.body;
-  const saltRounds = 10;
-  const passwordHash = await bcrypt.hash(password, saltRounds);
-  const currUser = await User.create({ email, name, password: passwordHash });
-  req.session.userId = currUser.id; 
-  req.session.userName = currUser.name;
-  req.session.userEmail = currUser.email;
-  res.redirect('/');
-});
-module.exports = router
+orderRouter.route('/:commId')
+  .delete(async (req, res) => {
+    await Comment.destroy({
+      where: {
+        id: req.params.commId,
+      },
+    });
+    res.sendStatus(200);
+  });
+
+orderRouter.route('/:commId/edit')
+  .get(async (req, res) => {
+    const commData = await Comment.findOne({
+      where: {
+        id: req.params.commId,
+      },
+    });
+    res.render('commedit', { commData });
+  })
+
+  .patch(async (req, res) => {
+    const { title, content } = req.body;
+    await Comment.update(
+      { title, content }, {
+        where: { id: req.params.commId },
+      },
+    );
+    res.sendStatus(200);
+  });
+
+module.exports = orderRouter;
