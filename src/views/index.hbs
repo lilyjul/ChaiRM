@@ -1,3 +1,22 @@
-<div class="main">
+<div style="color:aliceblue" class="main">
+    <div>
+        {{#if user}}
+        <h1>Welcome to ChaiRM, {{user.name}}!!!</h1>
 
+    </div>
+    <div class="customersOnlyName">
+        <h3>
+            <a href=" /clients">Клиенты</a>
+        </h3>
+        {{#each customersList}}
+        <p>{{this.firstName}}</p>
+        {{/each}}
+
+    </div>
+    {{else}}
+    <h1>Please, LogIn or SiqnUp</h1>
+    <div>
+
+    </div>
+    {{/if}}
 </div>

@@ -1,7 +1,9 @@
-const router = require('express').Router()
+const router = require('express').Router();
+const { Customer } = require('../db/models')
 
-router.get('/', (req, res, next) => {
-    res.render('index')
+router.get('/', async (req, res, next) => {
+    const customersList = await Customer.findAll({raw:true})
+    res.render('index', { customersList })
 })
 
 router.route('/logout')

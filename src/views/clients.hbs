@@ -1,18 +1,48 @@
-<main class="main">
-  <h1>Our Clients</h1>
-  <div>
-
+<div class="container">
+  <main class="main" style="color: lightyellow;">
+    <h1>Our Clients</h1>
     <div>
-      {{#each customersList}}
-      <p class="fio">{{this.firstName}} {{this.lastName}}</p>
-      <p class="fio"> Address: {{this.address}}</p>
-      <textarea id="comment-textarea" name="body" cols="200" rows="400" class="client_comment"></textarea>
-      <button id="add_comment" data-entryid="{{entry.id}}" value="add" class="add_com">Add comment</button>
-      {{/each}}
-    </div>
-    <div>
-      {{curCustomer}}
-    </div>
+      <div class="client-wrapper">
+        <div style="color: lightyellow;">
+          {{#each customersList}}
+          <div class="clientblock">
+            <a class="fio" href="/clients/{{this.id}}">{{this.firstName}} {{this.lastName}}</a>
+            <p class="fio"> Адрес: {{this.address}}</p>
 
-  </div>
-</main>
+
+
+
+            {{#each this.Comments}}
+            <p>{{this.content}}</p>
+            {{/each}}
+          </div>
+          {{/each}}
+        </div>
+
+      </div>
+
+
+
+
+      <div style="color: lightyellow;">
+        {{#if curCustomer}}
+        <p>{{curCustomer.firstName}} {{curCustomer.lastName}}</p>
+        <p>{{curCustomer.address}}</p>
+
+
+        {{#each curCustomer.Comments}}
+        <p>{{this.content}}</p>
+        <p>Дата коментария: {{this.createdAt}}</p>
+        <p>Автор: {{../userName.firstName}} {{../userName.lastName}}</p>
+        {{/each}}
+        <form action="/clients/{{curCustomer.id}}" method="POST"  >
+          <input name="content" id="comment-textarea" name="body" cols="100" rows="1" class="client_comment"></teinputxtarea>
+          <button type="submit" id="add_comment" data-entryid="{{entry.id}}" class="add_com">Add comment</button>
+        </form>
+          {{/if}}
+      </div>
+
+    </div>
+  </main>
+
+</div>

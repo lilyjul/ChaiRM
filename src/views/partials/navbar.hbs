@@ -1,13 +1,17 @@
-<div>
-<ul class="navbar-nav"  class="main" style="background-color:lightslategray;">
-    {{#if user}}
-    <li><a class="nav-link" href="/logout">Logout</a></li>
-    <li><a class="nav-link" href="/clients">Clients</a></li>
-    <li><a class="nav-link" href="/orders">Order</a></li>
-    {{else}}
-    <li><a class="nav-link" href="/">Home</a></li>
-    <li><a class="nav-link" href="/log/signup">Registration</a></li>
-    <li><a class="nav-link" href="/log/signin">Login</a></li>
-    {{/if}}
-</ul>
+<div class="container">
+    <div>
+    <ul class="navbar-nav" "main" >
+        {{#if user}}
+        <li><a class="nav-link" href="/">Home</a></li>
+        <li><a class="nav-link" href="/clients">Clients</a></li>
+        <li><a class="nav-link" href="/orders">Order</a></li>
+        <li><a class="nav-link" href="/logout">Logout</a></li>
+        {{else}}
+        <li><a class="nav-link" href="/">Home</a></li>
+        <li><a class="nav-link" href="/log/signup">Registration</a></li>
+        <li><a class="nav-link" href="/log/signin">Login</a></li>
+        {{/if}}
+    </ul>
+    </div>
+
 </div>
