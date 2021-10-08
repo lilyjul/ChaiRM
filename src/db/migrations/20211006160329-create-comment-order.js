@@ -9,7 +9,6 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       commentId: {
-        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'Comments',

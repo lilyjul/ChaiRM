@@ -1,9 +1,11 @@
 const router = require('express').Router();
-const { Customer } = require('../db/models')
+const { Customer, Order } = require('../db/models')
 
 router.get('/', async (req, res, next) => {
-    const customersList = await Customer.findAll({raw:true})
-    res.render('index', { customersList })
+    const customersList = await Customer.findAll({ raw: true })
+    const orderList = await Order.findAll({ raw: true })
+    console.log(orderList);
+    res.render('index', { customersList, orderList })
 })
 
 router.route('/logout')
@@ -17,4 +19,8 @@ module.exports = router
 
 
 
+router.get('/', (req, res, next) => {
+    res.render('index');
+});
 
+module.exports = router;

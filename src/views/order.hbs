@@ -1,36 +1,27 @@
-<div class="container">
-    <main class="main">
-        <div class="order_pro">
-            <div class="Order_number">
-                <label class="form-label-name">Order number</label> <br>
-                <input name="name" type="text" class="form_control" id="exampleInputEmail2" aria-describedby="emailHelp">
-                <button id="show_order">Show</button>
+<h3 class="h3">Orders</h3>
+<form name="orderList">
+  <ul class="list_order">
+    {{#each orderData}}
+    <li class="order_list">
+      <a class="order_name"href="/orders/{{this.id}}">Order №{{this.orderNumber}}</a>
+      <ul class="list_order">
+        <li >
+          {{!-- <form name="card"> --}}
+            {{#each this.Comments}}
+            <div class="card">
+              <div data-id="{{this.id}}" class="card-body">
+                <h5 class="card-title">{{this.title}}</h5>
+                <p class="card-text">{{this.content}}</p>
+                <button type="button" class="btn btn-success" style="margin: 10px 5px 5px 5px;">Edit</button>
+                <button type="button" class="btn btn-danger" style="margin: 10px 5px 5px 5px;">Delete</button>
+              </div>
             </div>
-            <div class="furniture_type">
-                <label class="form-label-email">Furniture type- {{this.type}}</label>
-
-            </div>
-            <div class="furniture_price">
-                <label class="furniture-label-price">Furniture price - {{this.price}}</label> <br>
-
-            </div>
-            <div class="furniture_delivery">
-                <label class="form-label-delivery-price">Delivery price - {{this.delivery}}</label> <br>
-
-            </div>
-            <div class="furniture_assembly">
-                <label class="form-label-assembly">Assembly price - {{this.assembly}}</label> <br>
-            </div>
-            <div class="delivery_date">
-                <label class="form-label-delivery-date">Delivery date - {{this.deliverydate}}</label> <br>
-            </div>
-            <div class="assembly_data">
-                <label class="form-label-assembly-date">Assembly date - {{this.assemblydate}}</label> <br>
-            </div>
-            <div class="status">
-                <label class="status_order">Status - {{this.status}}</label> <br>
-            </div>
-        </div>
-    </main>
-    
-</div>
+            {{/each}}
+            {{!--
+          </form> --}}
+        </li>
+      </ul>
+    </li>
+    {{/each}}
+  </ul>
+</form>

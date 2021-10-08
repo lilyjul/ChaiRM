@@ -1,0 +1,16 @@
+<form name="commEdit">
+{{#if commData}}
+  <div class="input_edit"  data-id="{{commData.id}}">
+    <div>
+      <label for="exampleFormControlInput1" class="form-label">Comment title</label>
+      <input name="title" type="text" class="form-control" value="{{commData.title}}">
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Content</label>
+      <input name="content" class="form-control" id="exampleFormControlTextarea1" rows="3" value="{{commData.content}}"></input>
+    </div>
+    <button type="button" class="btn btn-primary" style="margin: 10px 5px 5px 5px;">Save</button>
+    <button type="button" class="btn btn-secondary" style="margin: 10px 5px 5px 5px;">Cancel</button>
+  </div>
+{{/if}}
+</form>
