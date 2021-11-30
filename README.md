@@ -4,9 +4,9 @@
 
 Для разработки приложения был использован следующий стек:
 
-Node.js
-ExpressJS
-Handlebars
-Bootstrap
-PostgreSQL
-Sequelize ORM
+- Node.js
+- ExpressJS
+- Handlebars
+- Bootstrap
+- PostgreSQL
+- Sequelize ORM
